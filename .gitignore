@@ -1,5 +1,4 @@
-*.dmb
-*.rsc
-*.int
-*.lk
-*.zip
+*.d~
+*.o
+*~
+bin/*
