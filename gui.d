@@ -9,7 +9,7 @@ import gtk.StatusIcon;
 void main(string[] args)
 {
    Main.init(args);
-   //MainWindow win = new Tray();
+   MainWindow win = new Tray();
    StatusIcon st = new StatusIcon();
 
    Menu s = new Menu();
@@ -22,6 +22,25 @@ void main(string[] args)
    s.append(ss);
    s.show();
    Main.run();
+}
+
+class MenuC : Menu
+{
+    void changeImage()
+    {
+
+    }
+
+    void updateTooltip()
+    {
+
+    }
+
+    void addSubmenu(MenuItem submenu)
+    {
+        append(submenu);
+    }
+
 }
 
 class Tray : MainWindow

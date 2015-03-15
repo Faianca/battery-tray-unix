@@ -1,5 +1,3 @@
-module cteam.battery;
-
 import std.stdio;
 import std.path;
 import std.file;
