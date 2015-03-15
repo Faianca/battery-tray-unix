@@ -7,14 +7,6 @@ import std.string;
 import std.conv;
 import std.math;
 
-int main(string[] args)
-{
-    Battery bat = new Battery();
-    writeln(bat.getState());
-    writeln(bat.getPercentage());
-    return 0;
-}
-
 /***
 ** Battery
 **/

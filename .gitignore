@@ -3,4 +3,5 @@
 *.swp
 *~
 battery
+main
 bin/*
