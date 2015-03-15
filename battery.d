@@ -10,12 +10,14 @@ import std.math;
 int main(string[] args)
 {
     Battery bat = new Battery();
-    writeln(bat.getPercentage());
     writeln(bat.getState());
     writeln(bat.getPercentage());
     return 0;
 }
 
+/***
+** Battery
+**/
 class Battery
 {
     /**
@@ -24,15 +26,15 @@ class Battery
     enum info
     {
         Status   = "status",
-        Power = "OnBattery",
-        Type = "type",
-        Model  = "Charging",
+        Power    = "OnBattery",
+        Type     = "type",
+        Model    = "Charging",
         Serial   = "Charged",
-        Now = "energy_now",
-        Full = "energy_full"
+        Now      = "energy_now",
+        Full     = "energy_full",
     }
 
-    string batteryPath;
+    private string batteryPath;
 
     this()
     {
@@ -42,6 +44,21 @@ class Battery
     string getState()
     {
         return read(info.Status);
+    }
+
+    string getRemainingTime()
+    {
+        float remain = 111;
+        float dischargeRate = 111;
+
+        float remainingTime = remain / dischargeRate;
+        int hours = to!int(remainingTime);
+        int minutes = to!int(((remainingTime-hours)*60));
+
+        char szBuffer[256];
+        //sprintf(szBuffer, "%d:%02d", hours, minutes);
+
+        return "coming soon";
     }
 
     string getPercentage()
@@ -55,17 +72,17 @@ class Battery
 
     string getType()
     {
-        return this.read(info.Type);
+        return read(info.Type);
     }
 
     string getSerialNumber()
     {
-        return "cteam";
+        return read(info.Serial);
     }
 
     string getModelNumber()
     {
-        return "cteam";
+        return read(info.Model);
     }
 
     private auto read(string type)
