@@ -1,4 +1,3 @@
-
 import gtk.MainWindow;
 import gtk.Label;
 import gtk.Main;
@@ -6,7 +5,7 @@ import gtk.Menu;
 import gtk.MenuItem;
 import gtk.StatusIcon;
 
-void main(string[] args)
+void smain(string[] args)
 {
    Main.init(args);
    MainWindow win = new Tray();
