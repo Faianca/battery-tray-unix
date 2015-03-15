@@ -1,4 +1,3 @@
-
 module cteam.battery;
 
 import std.stdio;
@@ -10,68 +9,69 @@ import std.math;
 
 int main(string[] args)
 {
-	Battery bat = new Battery();
-	writeln(bat.getPercentage());
-	writeln(bat.getState());
-	writeln(bat.getPercentage());
-	return 0;
+    Battery bat = new Battery();
+    writeln(bat.getPercentage());
+    writeln(bat.getState());
+    writeln(bat.getPercentage());
+    return 0;
 }
 
 class Battery
 {
-	/**
-	* The Power States
-	*/
-	enum info {
-	     Status   = "status",
-	     Power = "OnBattery",
-	     Type = "type",
-	     Model  = "Charging",
-	     Serial   = "Charged",
-		 Now = "energy_now",
-		 Full = "energy_full"
+    /**
+    * The Power States
+    */
+    enum info
+    {
+        Status   = "status",
+        Power = "OnBattery",
+        Type = "type",
+        Model  = "Charging",
+        Serial   = "Charged",
+        Now = "energy_now",
+        Full = "energy_full"
     }
 
-	string batteryPath;
+    string batteryPath;
 
     this()
-	{
-		batteryPath = "/sys/class/power_supply/BAT0";
-	}
+    {
+        batteryPath = "/sys/class/power_supply/BAT0";
+    }
 
-	string getState()
-	{
-		return read(info.Status);
-	}
- 
-	string getPercentage()
-	{
-		float full = to!float(read(info.Full));
-		float now = to!float(read(info.Now));
+    string getState()
+    {
+        return read(info.Status);
+    }
 
-		int value = to!int(round(now) / round(full) * 100);
-		return to!string(value) ~ "%";
-	}
+    string getPercentage()
+    {
+        float full = to!float(read(info.Full));
+        float now = to!float(read(info.Now));
 
-	string getType()
-	{
-		return this.read(info.Type);
-	}
+        int value = to!int(round(now) / round(full) * 100);
+        return to!string(value) ~ "%";
+    }
 
-	string getSerialNumber()
-	{
-		return "cteam";
-	}
+    string getType()
+    {
+        return this.read(info.Type);
+    }
 
-	string getModelNumber()
-	{
-		return "cteam";
-	}
+    string getSerialNumber()
+    {
+        return "cteam";
+    }
 
-	private auto read(string type)
-	{
-		string status = chomp(readText(buildPath(batteryPath, type)));
-		return status;
-	}
+    string getModelNumber()
+    {
+        return "cteam";
+    }
+
+    private auto read(string type)
+    {
+        string status = chomp(readText(buildPath(batteryPath, type)));
+        return status;
+    }
 
 }
