@@ -1,10 +1,5 @@
-*.d~
+.dub
+docs.json
+__dummy.html
 *.o
-*.swp
-*~
-battery
-main
-bin/*
-battery-cteam.userprefs
-battery-cteam.sln
-battery.userprefs
+*.obj

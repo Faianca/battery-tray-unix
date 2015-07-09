@@ -1,0 +1,9 @@
+{
+	"name": "battery-tray-unix",
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2015, jmeireles",
+	"authors": ["jmeireles"],
+	"dependencies": {
+		"gtk-d:gtkd": "~>3.1.4"
+	}
+}
