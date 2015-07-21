@@ -25,12 +25,12 @@ class Battery
     }
 
     private string batteryPath;
-
+    
     this()
     {
         batteryPath = "/sys/class/power_supply/BAT0";
     }
-
+    
     string getState()
     {
         return read(info.Status);

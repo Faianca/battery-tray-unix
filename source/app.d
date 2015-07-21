@@ -6,7 +6,6 @@ private import gtk.MainWindow;
 private import gtk.StatusIcon;
 private import gtk.Widget;
 private import gtk.Button;
-private import gtk.Button;
 private import gtk.Entry;
 private import gtk.SpinButton;
 private import gtk.Menu;
@@ -14,6 +13,7 @@ private import gtk.MenuItem;
 private import gtk.AboutDialog;
 private import gtk.Dialog;
 private import gtk.Label;
+private import gtk.MessageDialog;
 
 private import gdk.Keymap;
 private import gdk.Event;
@@ -35,18 +35,12 @@ void main(string[] args)
    Main.run();
 }
 
-
-class MenuC : Menu
+class MainMenu : Menu
 {
-    void changeImage()
-    {
-
-    }
-
-    void updateTooltip()
-    {
-
-    }
+	void refreshToolTip(Battery bat)
+	{
+	    this.setTooltipText(bat.getState() ~ " " ~ bat.getPercentage());
+	}
 
     void addSubmenu(MenuItem submenu)
     {
@@ -56,30 +50,34 @@ class MenuC : Menu
 
 class Tray
 {
-	 Menu s;
+	private MainMenu mainMenu;
+	StatusIcon st;
 
     this()
     {
-        //super("hello world");
-        //setDefaultSize(200, 100);
-        //add(new Label("Faianca Power :x"));
-        //showAll();
-
-        StatusIcon st = new StatusIcon();
+        st = new StatusIcon();
 	    Battery bat = new Battery();
 	    writeln(bat.getState() ~ " " ~ bat.getPercentage());
 
-	    s = new Menu();
-	    s.setTooltipText("sdas");
+	    mainMenu = new MainMenu();
+	  
+	    //mainMenu.refreshToolTip(bat);
+
 	    st.setFromFile("/home/jmeireles/dlang/battery-tray-unix/styles/battery-connect.png");
-	    st.setTooltipText("Ssdada");
+	    st.setTooltipText(bat.getState() ~ " " ~ bat.getPercentage());
+
 	    st.addOnActivate(&onStatusIconClicked);
-	     st.addOnPopupMenu(&onStatusIconShowPopupMenu);
-	   
-	    MenuItem ss = new MenuItem("sup");
-	    ss.show();
-	    s.append(ss);
-	    s.show();
+	    st.addOnPopupMenu(&onStatusIconShowPopupMenu);
+	   	
+	    MenuItem aboutMenu = new MenuItem("About");
+	    MenuItem quitMenu = new MenuItem("Quit");
+
+	    quitMenu.addOnActivate(&quit);
+	    aboutMenu.addOnActivate(&about);
+
+	    mainMenu.addSubmenu(aboutMenu);
+	    mainMenu.addSubmenu(quitMenu);
+	    mainMenu.showAll();
     }
 
     private void onStatusIconClicked(StatusIcon widget) 
@@ -92,7 +90,25 @@ class Tray
 	 */
 	private void onStatusIconShowPopupMenu (uint button, uint time, StatusIcon widget)
 	{
-		this.s.popup(null, null, null, cast(void *) widget, button, time);
+		this.mainMenu.popup(null, null, null, cast(void *) widget, button, time);
+	}
+
+	/**
+	* About Dialog
+	*/
+	private void about(MenuItem widget)
+	{
+	    MessageDialog aboutDialog = new MessageDialog(null, GtkDialogFlags.MODAL, MessageType.INFO, ButtonsType.OK, "By Cteam-Lab 1.0!");
+        aboutDialog.setTitle("About");
+        aboutDialog.setPosition(GtkWindowPosition.CENTER);
+        aboutDialog.setMarkup("Battery Tray 1.0 \nBy Jorge Meireles - Cteam");
+        aboutDialog.run();
+        aboutDialog.destroy();
+	}
+	
+	private void quit(MenuItem widget)
+	{
+		Main.quit();
 	}
 
 }
