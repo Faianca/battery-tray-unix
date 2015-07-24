@@ -1,3 +1,5 @@
+module battery;
+
 import std.stdio;
 import std.path;
 import std.file;
@@ -46,18 +48,27 @@ class Battery
         int minutes = to!int(((remainingTime-hours)*60));
 
         char[256] szBuffer;
-        //sprintf(szBuffer, "%d:%02d", hours, minutes);
 
         return "coming soon";
     }
 
-    string getPercentage()
+    bool isCharging()
+    {
+       return (this.getState() != "Discharging");
+    }
+
+    int getBatteryLevel()
     {
         float full = to!float(read(info.Full));
         float now = to!float(read(info.Now));
 
         int value = to!int(round(now) / round(full) * 100);
-        return to!string(value) ~ "%";
+        return value;
+    }
+
+    string getPercentage()
+    {
+        return to!string(this.getBatteryLevel()) ~ "%";
     }
 
     string getType()

@@ -1,0 +1,14 @@
+{
+  "currentStyle": "blue",
+  "styles": [
+   { 
+      "name": "blue"
+   },
+   { 
+      "name": "green"  
+   },
+   { 
+      "name": "black"  
+   }
+  ]
+}
